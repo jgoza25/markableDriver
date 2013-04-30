@@ -17,6 +17,11 @@ WebDriverの生成箇所を下記のように書き換えます。
 		// WebDriver driver = new FirefoxDriver();
 		WebDriver driver = new MarkableWebDriver(new FirefoxDriver());
 ```
+TakesScreenshot使って画面キャプチャを取るとfindElement(s)した要素にマーキングが追加されます。
+
+## サンプル実装
+[Selenium2Example1Test.java](https://github.com/jgoza25/markableDriver/blob/master/example/org/jgoza25/selenium/example/Selenium2Example1Test.java)
+
 
 ## 適用前の画面キャプチャ
 ![view2](res/00b.png)
@@ -24,4 +29,6 @@ WebDriverの生成箇所を下記のように書き換えます。
 ## 適用後の画面キャプチャ
 ![view3](res/00.png)
 findElement()している要素が赤線で囲まれてみやすくなっています。
+
+
 
