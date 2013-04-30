@@ -9,7 +9,7 @@ SeleniumのWebDriverを拡張し、画面キャプチャ時に検証個所にマークを追加します。
 
 ## ダウンロード
 
-最新バージョン　[markableWebDriver_0.1.jar](dist/markableWebDriver_0.1.jar)
+最新バージョン　[markableWebDriver_0.1.jar](http://tin.li/6qd)
 
 ## 使い方
 WebDriverの生成箇所を下記のように書き換えます。
@@ -23,4 +23,5 @@ WebDriverの生成箇所を下記のように書き換えます。
 
 ## 適用後の画面キャプチャ
 ![view3](res/00.png)
+findElement()している要素が赤線で囲まれてみやすくなっています。
 
