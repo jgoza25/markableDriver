@@ -17,9 +17,10 @@ WebDriverの生成箇所を下記のように書き換えます。
 		// WebDriver driver = new FirefoxDriver();
 		WebDriver driver = new MarkableWebDriver(new FirefoxDriver());
 ```
-適用前の画面キャプチャ
-![view2](res/01b.png)
 
-適用後の画面キャプチャ
-![view2](res/01.png)
+## 適用前の画面キャプチャ
+![view2](res/00b.png)
+
+## 適用後の画面キャプチャ
+![view3](res/00.png)
 
