@@ -32,7 +32,8 @@ findElement()している要素が赤線で囲まれてみやすくなってい�
 
 ## コメントの記載方法
 画面キャプチャにコメントを残すことができます。
-MarkableWebDriverを利用した場合、各要素は MarkableWebElement が
+MarkableWebDriverを利用した場合、各要素は MarkableWebElement がインタフェースを実装していますので
+addComment()メソッドを使ってコメントを書きます。
 ```java
 ((MarkableWebElement) element).addComment("コメントを記入");
 ```
