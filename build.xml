@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<project name="MarkableDriver" default="main" basedir=".">
+
+	<property name="version" value="0.2" />
+	<property name="jarname" value="dist/markableWebDriver_${version}" />
+	<property name="dir.temp" value="build/tmp" />
+	<property name="dir.src" value="src" />
+	<property name="dir.lib" value="lib" />
+	<property name="manifestfile" value="dist/MANIFEST.MF" />
+	<property name="compiler" value="/usr/bin/javac" />
+
+	<path id="classpath">
+		<fileset dir="lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="main" depends="makeJar" />
+
+	<target name="cleanup">
+		<delete dir="${dir.temp}" />
+		<mkdir dir="${dir.temp}" />
+	</target>
+
+	<target name="compile" depends="cleanup">
+		<javac srcdir="${dir.src}" destdir="${dir.temp}" executable="${compiler}">
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<target name="makeJar">
+		<jar basedir="${dir.temp}" destfile="${jarname}.jar" manifest="${manifestfile}" />
+	</target>
+
+</project>

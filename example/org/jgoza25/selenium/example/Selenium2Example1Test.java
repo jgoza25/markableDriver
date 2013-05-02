@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.jgoza25.selenium.MarkableWebDriver;
-import org.jgoza25.selenium.MarkableWebElement;
+import org.jgoza25.selenium.MarkableWebElementImpl;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -28,8 +28,8 @@ public class Selenium2Example1Test {
 		WebDriver driver = new MarkableWebDriver(new FirefoxDriver());
 		driver.manage().timeouts().implicitlyWait(3000, TimeUnit.MILLISECONDS);
 
-		driver.get("https://github.com/jgoza25/Selenium.MarkableWebDriver");
-		assertThat(driver.getTitle(), is("jgoza25/Selenium.MarkableWebDriver · GitHub"));
+		driver.get("https://github.com/jgoza25/markableDriver");
+		assertThat(driver.getTitle(), is("jgoza25/markableDriver · GitHub"));
 		assertThat(driver.findElement(By.linkText("Explore GitHub")).isDisplayed(), is(true));
 		assertThat(driver.findElement(By.linkText("Search")).isDisplayed(), is(true));
 		assertThat(driver.findElement(By.linkText("Features")).isDisplayed(), is(true));
@@ -37,11 +37,11 @@ public class Selenium2Example1Test {
 		WebElement urlbox = driver.findElement(By.cssSelector("div.url-box.js-url-box"));
 		WebElement urlField = urlbox.findElement(By.cssSelector("input.url-field.js-url-field"));
 
-		assertThat(urlField.getAttribute("value"), is("https://github.com/jgoza25/Selenium.MarkableWebDriver.git"));
+		assertThat(urlField.getAttribute("value"), is("https://github.com/jgoza25/markableDriver.git"));
 		WebElement srchlink = driver.findElement(By.linkText("Search"));
 
 		comment(srchlink, "click");
-		capture(driver, "01b.png");
+		capture(driver, "res/01.png");
 		srchlink.click();
 
 		WebElement srchtxt = driver.findElement(By.name("q"));
@@ -49,11 +49,11 @@ public class Selenium2Example1Test {
 		WebElement srchbtn = driver.findElement(By.cssSelector("button.button"));
 		comment(srchbtn, "click");
 
-		capture(driver, "02b.png");
+		capture(driver, "res/02.png");
 		srchbtn.click();
 
 		assertEquals("selenium", driver.findElement(By.name("q")).getAttribute("value"));
-		capture(driver, "03b.png");
+		capture(driver, "res/03.png");
 
 		driver.close();
 	}
@@ -66,8 +66,8 @@ public class Selenium2Example1Test {
 	}
 
 	protected void comment(WebElement element, String comment) {
-		if (element instanceof MarkableWebElement) {
-			((MarkableWebElement) element).addComment(comment);
+		if (element instanceof MarkableWebElementImpl) {
+			((MarkableWebElementImpl) element).addComment(comment);
 		}
 	}
 }

@@ -31,14 +31,14 @@ public class MarkableWebDriver implements WebDriver, TakesScreenshot {
 
 	private WebDriver driver;
 	private Map<WebElement, String> elements = new LinkedHashMap<WebElement, String>();
-
+	
 	public MarkableWebDriver(WebDriver driver) {
 		this.driver = driver;
 	}
 
 	public WebElement addMarkableElement(WebElement element) {
 		this.elements.put(element, null);
-		return new MarkableWebElement(this, element);
+		return new MarkableWebElementImpl(this, element);
 	}
 	
 	public List<WebElement> addMarkableElement(List<WebElement> elements) {
@@ -67,7 +67,7 @@ public class MarkableWebDriver implements WebDriver, TakesScreenshot {
 		List<WebElement> list = driver.findElements(arg0);
 		for (WebElement element : list) {
 			addMarkableElement(element);
-			list2.add(new MarkableWebElement(this, element));
+			list2.add(new MarkableWebElementImpl(this, element));
 		}
 		return list;
 	}
