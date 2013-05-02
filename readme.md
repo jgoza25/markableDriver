@@ -18,6 +18,7 @@ WebDriverの生成箇所を下記のように書き換えます。
 		WebDriver driver = new MarkableWebDriver(new FirefoxDriver());
 ```
 TakesScreenshot使って画面キャプチャを取るとfindElement(s)した要素にマーキングが追加されます。
+TakesScreenshotの使い方は後述しています。
 
 ## サンプル実装
 [Selenium2Example1Test.java](https://github.com/jgoza25/markableDriver/blob/master/example/org/jgoza25/selenium/example/Selenium2Example1Test.java)
@@ -38,3 +39,26 @@ addComment()メソッドを使ってコメントを書きます。
 ((MarkableWebElement) element).addComment("コメントを記入");
 ```
 
+＃ Selenium2の一般的な画面キャプチャのとり方（参考）
+TakesScreenshotインタフェースを実装している場合、画面キャプチャを取得することができます。
+下記のようにキャプチャ用のメソッドを用意しておくと便利です。
+
+```java
+	@Test
+	public void test() throws Exception {
+		// WebDriverを生成
+		WebDriver driver = new FirefoxDriver();
+		
+		// 省略
+
+		// 画面キャプチャを取得
+		capture(driver, "res/01.png");
+	}
+
+	private void capture(WebDriver driver, String path) throws IOException {
+		if (driver instanceof TakesScreenshot) {
+			File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(file, new File(path));
+		}
+	}
+```
