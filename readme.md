@@ -9,7 +9,7 @@ SeleniumのWebDriverを拡張し、画面キャプチャ時に検証個所にマ
 
 ## ダウンロード
 
-最新バージョン　[markableWebDriver_0.1.jar](http://tin.li/6qd)
+最新バージョン　[markableWebDriver_0.2.jar](https://github.com/jgoza25/markableDriver/raw/master/dist/markableWebDriver_0.2.jar)
 
 ## 使い方
 WebDriverの生成箇所を下記のように書き換えます。
