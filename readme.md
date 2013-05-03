@@ -49,7 +49,7 @@ addComment()メソッドを使ってコメントを書きます。
 ```java
 ((MarkableWebElement) element).addComment("コメントを記入");
 ```
-
+![comment.png](res/comment.png)
 # Selenium2の一般的な画面キャプチャのとり方（参考）
 TakesScreenshotインタフェースを実装している場合、画面キャプチャを取得することができます。
 下記のようにキャプチャ用のメソッドを用意しておくと便利です。
