@@ -1,11 +1,15 @@
 package org.jgoza25.selenium;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.fail;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -123,6 +127,30 @@ public class MarkableWebDriver implements WebDriver, TakesScreenshot {
 		if (!(driver instanceof TakesScreenshot)) {
 			return null;
 		}
+		X x = getMarkedScreenshotAs(type);
+		markedElements.clear();
+		return x;
+	}
+
+	/**
+	 * 画面キャプチャを検証します。
+	 * 
+	 * @param path 画面キャプチャのパス（期待値）
+	 * @throws IOException
+	 */
+	public void assertScreenshot(String path) throws IOException {
+		if (!(driver instanceof TakesScreenshot)) {
+			fail("Not implments TakesScreenshot");
+		}
+		byte[] actuals = getMarkedScreenshotAs(OutputType.BYTES);
+		byte[] expecteds = getImageToBytes(path);
+		assertArrayEquals(expecteds, actuals);
+	}
+
+	private <X> X getMarkedScreenshotAs(OutputType<X> type) throws WebDriverException {
+		if (!(driver instanceof TakesScreenshot)) {
+			return null;
+		}
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		X x = ts.getScreenshotAs(type);
 		try {
@@ -163,13 +191,27 @@ public class MarkableWebDriver implements WebDriver, TakesScreenshot {
 				}
 			}
 			g.dispose();
-			markedElements.clear();
 			return (X) writeImage(type, img);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
+	/**
+	 * 指定したパスのImageファイル(PNG)をbyte配列で取得します。
+	 * 
+	 * @param path Imageファイルのパス
+	 * @return byte配列
+	 * @throws IOException
+	 */
+	private byte[] getImageToBytes(String path) throws IOException {
+		BufferedImage bi = ImageIO.read(new File(path));
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ImageIO.write(bi, "png", bos);
+		return bos.toByteArray();
+	}
+	
+	
 	private <X> BufferedImage getImage(OutputType<X> type, Object x)
 			throws IOException {
 		if (type == OutputType.BYTES) {

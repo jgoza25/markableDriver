@@ -31,10 +31,17 @@ TakesScreenshotの使い方は後述しています。
 ![view3](res/00.png)
 findElement()している要素が赤線で囲まれてみやすくなっています。
 
+## 画面を検証する
+既存の画面キャプチャと比較し、現在の画面と一致するか確認します。
+assertScreenshot()メソッドを利用して検証します。引数は期待値となる画面キャプチャのファイルパスです。
+```java
+((MarkableWebDriver) driver).assertScreenshot(path);
+```
+
 ## 要素をマスクする
 画面キャプチャの差分による検証を行う場合、現在時刻など外的要因によって
 表示が変わってしまう要素が含まれてしまうと単純な画像比較による検証が行えません。
-下記のようにMarkableWebDriverを利用した場合、各要素は MarkableWebElement がインタフェースを実装していますので
+MarkableWebDriverを利用した場合、各要素は MarkableWebElement がインタフェースを実装していますので
 mask()メソッドを使って要素をマスクします。
 ```java
 ((MarkableWebElementImpl) element).mask();
