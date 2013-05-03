@@ -80,4 +80,8 @@ public class MarkableWebElementImpl implements MarkableWebElement {
 	public void addComment(String comment) {
 		driver.addComment(this, comment);
 	}
+	
+	public void mask() {
+		driver.mask(this);
+	}
 }

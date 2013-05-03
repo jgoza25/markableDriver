@@ -9,7 +9,7 @@ SeleniumのWebDriverを拡張し、画面キャプチャ時に検証個所にマ
 
 ## ダウンロード
 
-最新バージョン　[markableWebDriver_0.2.jar](https://github.com/jgoza25/markableDriver/raw/master/dist/markableWebDriver_0.2.jar)
+最新バージョン　[markableWebDriver_0.3.jar](https://github.com/jgoza25/markableDriver/raw/master/dist/markableWebDriver_0.3.jar)
 
 ## 使い方
 WebDriverの生成箇所を下記のように書き換えます。
@@ -30,6 +30,17 @@ TakesScreenshotの使い方は後述しています。
 ## 適用後の画面キャプチャ
 ![view3](res/00.png)
 findElement()している要素が赤線で囲まれてみやすくなっています。
+
+## 要素をマスクする
+画面キャプチャの差分による検証を行う場合、現在時刻など外的要因によって
+表示が変わってしまう要素が含まれてしまうと単純な画像比較による検証が行えません。
+下記のコードにより要素をマスク（黒塗り）する事ができます。
+
+```java
+((MarkableWebElementImpl) element).mask();
+```
+![masked.png](res/masked.png)
+
 
 ## コメントの記載方法
 画面キャプチャにコメントを残すことができます。

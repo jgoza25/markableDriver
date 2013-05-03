@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,14 +31,15 @@ import org.openqa.selenium.WebElement;
 public class MarkableWebDriver implements WebDriver, TakesScreenshot {
 
 	private WebDriver driver;
-	private Map<WebElement, String> elements = new LinkedHashMap<WebElement, String>();
+	private Map<WebElement, String> markedElements = new LinkedHashMap<WebElement, String>();
+	private Set<WebElement> maskedElements = new HashSet<WebElement>();
 	
 	public MarkableWebDriver(WebDriver driver) {
 		this.driver = driver;
 	}
 
 	public WebElement addMarkableElement(WebElement element) {
-		this.elements.put(element, null);
+		this.markedElements.put(element, null);
 		return new MarkableWebElementImpl(this, element);
 	}
 	
@@ -50,7 +52,7 @@ public class MarkableWebDriver implements WebDriver, TakesScreenshot {
 	}
 
 	public void addComment(WebElement element, String comment) {
-		this.elements.put(element, comment);
+		this.markedElements.put(element, comment);
 	}
 	
 	public void close() {
@@ -107,6 +109,10 @@ public class MarkableWebDriver implements WebDriver, TakesScreenshot {
 	public void quit() {
 		driver.quit();
 	}
+	
+	public void mask(WebElement element) {
+		maskedElements.add(element);
+	}
 
 	public TargetLocator switchTo() {
 		return driver.switchTo();
@@ -126,27 +132,38 @@ public class MarkableWebDriver implements WebDriver, TakesScreenshot {
 			((Graphics2D) g).setStroke(new BasicStroke(2.0f,
 					BasicStroke.JOIN_ROUND, BasicStroke.CAP_BUTT, 1.0f,
 					dash, 0.0f));
-			for (WebElement element : elements.keySet()) {
+			for (WebElement element : markedElements.keySet()) {
 				try {
 					g.setColor(Color.RED);
 					g.drawRoundRect(element.getLocation().x - 5,
 							element.getLocation().y - 5,
 							element.getSize().width + 10,
 							element.getSize().height + 10, 10, 10);
-					if (elements.get(element) != null) {
-						int width = g.getFontMetrics().stringWidth(elements.get(element));
+					if (markedElements.get(element) != null) {
+						int width = g.getFontMetrics().stringWidth(markedElements.get(element));
 						int height = g.getFontMetrics().getHeight();
 						g.setColor(Color.WHITE);
 						g.fillRect(element.getLocation().x, element.getLocation().y - 10 - height, width, height);
 						g.setColor(Color.RED);
-						g.drawString(elements.get(element), element.getLocation().x, element.getLocation().y - 10);
+						g.drawString(markedElements.get(element), element.getLocation().x, element.getLocation().y - 10);
 					}
 				} catch (StaleElementReferenceException e) {
 					// ignore
 				}
 			}
+			for (WebElement element : maskedElements) {
+				try {
+					g.setColor(Color.BLACK);
+					g.fillRect(element.getLocation().x,
+							element.getLocation().y,
+							element.getSize().width,
+							element.getSize().height);
+				} catch (StaleElementReferenceException e) {
+					// ignore
+				}
+			}
 			g.dispose();
-			elements.clear();
+			markedElements.clear();
 			return (X) writeImage(type, img);
 		} catch (Exception e) {
 			throw new RuntimeException(e);

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -40,6 +41,11 @@ public class Selenium2Example1Test {
 		assertThat(urlField.getAttribute("value"), is("https://github.com/jgoza25/markableDriver.git"));
 		WebElement srchlink = driver.findElement(By.linkText("Search"));
 
+		// div.frame-meta 要素をマスクします。
+		WebElement co = driver.findElement(By.cssSelector("div.frame-meta"));
+		mask(co);
+		
+		// Searchリンク要素を囲みclickとコメントを記載します。
 		comment(srchlink, "click");
 		capture(driver, "res/01.png");
 		srchlink.click();
@@ -68,6 +74,12 @@ public class Selenium2Example1Test {
 	protected void comment(WebElement element, String comment) {
 		if (element instanceof MarkableWebElementImpl) {
 			((MarkableWebElementImpl) element).addComment(comment);
+		}
+	}
+	
+	protected void mask(WebElement element) {
+		if (element instanceof MarkableWebElementImpl) {
+			((MarkableWebElementImpl) element).mask();
 		}
 	}
 }
