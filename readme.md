@@ -34,20 +34,19 @@ findElement()している要素が赤線で囲まれてみやすくなってい�
 ## 要素をマスクする
 画面キャプチャの差分による検証を行う場合、現在時刻など外的要因によって
 表示が変わってしまう要素が含まれてしまうと単純な画像比較による検証が行えません。
-下記のコードにより要素をマスク（黒塗り）する事ができます。
-
+下記のようにMarkableWebDriverを利用した場合、各要素は MarkableWebElement がインタフェースを実装していますので
+mask()メソッドを使って要素をマスクします。
 ```java
 ((MarkableWebElementImpl) element).mask();
 ```
 ![masked.png](res/masked.png)
-
 
 ## コメントの記載方法
 画面キャプチャにコメントを残すことができます。
 MarkableWebDriverを利用した場合、各要素は MarkableWebElement がインタフェースを実装していますので
 addComment()メソッドを使ってコメントを書きます。
 ```java
-((MarkableWebElement) element).addComment(click");
+((MarkableWebElement) element).addComment("click");
 ```
 ![comment.png](res/comment.png)
 # Selenium2にて画面キャプチャを取得する（参考）
