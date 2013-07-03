@@ -75,7 +75,7 @@ public class MarkableWebDriver implements WebDriver, TakesScreenshot {
 			addMarkableElement(element);
 			list2.add(new MarkableWebElementImpl(this, element));
 		}
-		return list;
+		return list2;
 	}
 
 	public void get(String arg0) {
